@@ -1,0 +1,28 @@
+﻿correlation_id;date_heure;version_agent;secteur;agent;entite_id;score;categorie;route;statut;latence_ms;tokens_total;cout_usd
+CID-20147f26ad;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-001;0;Risque faible;Sortie automatique;Succès;5279;204;0.000102
+CID-49dcc65756;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-002;100;Risque élevé;Escalade HITL (Slack simulé);En attente de décision humaine;739;204;0.000102
+CID-79bf0ddb31;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-003;27;Risque faible;Sortie automatique;Succès;323;204;0.000102
+CID-1238e7ef99;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-004;77;Risque élevé;Escalade HITL (Slack simulé);En attente de décision humaine;747;204;0.000102
+CID-4ae88fc242;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-005;0;Risque faible;Sortie automatique;Succès;296;204;0.000102
+CID-f74056fe43;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-006;100;Risque élevé;Escalade HITL (Slack simulé);En attente de décision humaine;5075;204;0.000102
+CID-2d92aa4f7a;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-007;13;Risque faible;Sortie automatique;Succès;371;204;0.000102
+CID-ecf16fa181;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-008;0;Risque faible;Sortie automatique;Succès;265;204;0.000102
+CID-70d51eb91b;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-009;74;Risque élevé;Escalade HITL (Slack simulé);En attente de décision humaine;767;204;0.000102
+CID-aadf5b1909;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-010;20;Risque faible;Sortie automatique;Succès;466;204;0.000102
+CID-8484ea3d26;2026-10-30 14:47:34;1.0.0;mines;Agent Sécurité Minière;MIN-001;31;Risque faible;Sortie automatique;Succès;553;200;0.0001
+CID-0a336ce71a;2026-10-30 14:47:34;1.0.0;mines;Agent Sécurité Minière;MIN-002;60;Risque modéré;Sortie automatique;Succès;5397;200;0.0001
+CID-5cc3c50d61;2026-10-30 14:47:34;1.0.0;mines;Agent Sécurité Minière;MIN-003;20;Risque faible;Sortie automatique;Succès;664;200;0.0001
+CID-1344029e62;2026-10-30 14:47:34;1.0.0;automobile;Agent Maintenance Véhicule;VEH-001;27;Risque faible;Sortie automatique;Succès;468;203;0.0001015
+CID-75e759f7e1;2026-10-30 14:47:34;1.0.0;automobile;Agent Maintenance Véhicule;VEH-002;39;Risque modéré;Sortie automatique;Succès;331;203;0.0001015
+CID-f2533aa817;2026-10-30 14:47:34;1.0.0;automobile;Agent Maintenance Véhicule;VEH-003;13;Risque faible;Sortie automatique;Succès;642;203;0.0001015
+CID-27750a040b;2026-10-30 14:47:34;1.0.0;finance;Agent Risque Transaction;TRX-001;17;Risque faible;Sortie automatique;Succès;299;205;0.0001025
+CID-18db4fbcc5;2026-10-30 14:47:34;1.0.0;finance;Agent Risque Transaction;TRX-002;67;Risque modéré;Sortie automatique;Succès;435;205;0.0001025
+CID-0a2f0b329e;2026-10-30 14:47:34;1.0.0;finance;Agent Risque Transaction;TRX-003;55;Risque modéré;Sortie automatique;Succès;561;205;0.0001025
+CID-8858ee614e;2026-10-30 14:47:34;1.0.0;energie;Agent Stabilité Réseau;RES-001;40;Risque modéré;Sortie automatique;Succès;274;205;0.0001025
+CID-941a15a572;2026-10-30 14:47:34;1.0.0;energie;Agent Stabilité Réseau;RES-002;47;Risque modéré;Sortie automatique;Succès;526;205;0.0001025
+CID-727270d368;2026-10-30 14:47:34;1.0.0;energie;Agent Stabilité Réseau;RES-003;54;Risque modéré;Sortie automatique;Succès;5145;205;0.0001025
+CID-b0b3a7f724;2026-10-30 14:47:34;1.0.0;egov;Agent Dossier Administratif;DOS-001;66;Risque modéré;Sortie automatique;Succès;402;206;0.000103
+CID-818ca0e844;2026-10-30 14:47:34;1.0.0;egov;Agent Dossier Administratif;DOS-002;43;Risque modéré;Sortie automatique;Succès;568;206;0.000103
+CID-ba9f788434;2026-10-30 14:47:34;1.0.0;egov;Agent Dossier Administratif;DOS-003;52;Risque modéré;Sortie automatique;Succès;437;206;0.000103
+CID-c62d5e0bab;2026-10-30 14:47:34;1.0.0;sante;Agent Triage Patient;PAT-INV1;;;Revue manuelle;Échec;2;0;0.0
+CID-e65b6fcef8;2026-10-30 14:47:34;1.0.0;finance;Agent Risque Transaction;TRX-INV1;;;Revue manuelle;Échec;2;0;0.0

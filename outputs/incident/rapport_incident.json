@@ -1,0 +1,45 @@
+{
+  "scenario": "CR-002 : seuil HITL 70 -> 90",
+  "anomalies_avant_rollback": 1,
+  "anomalies_apres_rollback": 0,
+  "redeploiement_bloque_par_golden": true,
+  "version_finale": "1.0.0",
+  "etapes": [
+    "1. Détection : version 1.1.0 active, 1 patient(s) critique(s) non escaladé(s)",
+    "2. Contention : kill switch actif -> statut « Suspendu (kill switch) »",
+    "3. Remédiation : rollback vers 1.0.0 -> 0 anomalie(s)",
+    "4. Rétablissement : kill switch off ; nouveau déploiement de 1.1.0 refusé par la non-régression : True"
+  ],
+  "audit": [
+    {
+      "horodatage": "2026-10-30 00:10:13",
+      "action": "deploiement",
+      "acteur": "ci-bypass",
+      "detail": "1.1.0 (CR-002) déployé sans non-régression"
+    },
+    {
+      "horodatage": "2026-10-30 00:10:13",
+      "action": "kill_switch_on",
+      "acteur": "astreinte",
+      "detail": "patients à risque non escaladés après CR-002"
+    },
+    {
+      "horodatage": "2026-10-30 00:10:13",
+      "action": "rollback",
+      "acteur": "astreinte",
+      "detail": "vers 1.0.0 : retour à la version stable (cause : CR-002)"
+    },
+    {
+      "horodatage": "2026-10-30 00:10:13",
+      "action": "kill_switch_off",
+      "acteur": "astreinte",
+      "detail": "retour à la normale"
+    },
+    {
+      "horodatage": "2026-10-30 00:10:13",
+      "action": "deploiement_refuse",
+      "acteur": "astreinte",
+      "detail": "1.1.0 : 2 écart(s) golden"
+    }
+  ]
+}

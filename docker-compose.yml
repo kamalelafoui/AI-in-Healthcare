@@ -1,0 +1,20 @@
+services:
+  api:
+    build: .
+    container_name: healthcare-agents-api
+    ports:
+      - "8001:8001"          # dashboard : http://localhost:8001
+    environment:
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-}
+    volumes:
+      - ./outputs:/app/outputs
+      - ./logs:/app/logs
+      - ./governance:/app/governance
+    restart: unless-stopped
+  batch:                      # lot de test à la demande : docker compose --profile batch run batch
+    build: .
+    command: ["python", "main.py"]
+    profiles: ["batch"]
+    volumes:
+      - ./outputs:/app/outputs
+      - ./logs:/app/logs

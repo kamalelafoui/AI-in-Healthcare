@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI in Healthcare — Supervision multi-agents</title>
+<link rel="icon" href="assets/logo.svg">
+<style>
+:root{--bg:#F4F7F8;--card:#fff;--ink:#14292F;--mut:#5B6F75;--line:#DCE5E8;--brand:#0F4C5C;--acc:#E36414;--ok:#2A9D8F;--warn:#E9A100;--bad:#C0392B}
+@media (prefers-color-scheme:dark){:root{--bg:#0D1B1F;--card:#14272D;--ink:#E8F0F2;--mut:#9DB2B8;--line:#24404A;--brand:#5FB3C6;--acc:#F28A3B;--ok:#47C0B0;--warn:#F2BE3B;--bad:#F0786B}}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{display:flex;align-items:center;gap:12px;padding:12px 20px;background:#0F4C5C;color:#fff;position:sticky;top:0;z-index:5}
+header img{width:40px;height:40px}header h1{font-size:17px;margin:0;font-weight:650}header small{opacity:.8;display:block;font-weight:400}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}nav button{background:transparent;border:0;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px}
+nav button.on,nav button:hover{background:rgba(255,255,255,.18)}
+main{max-width:1180px;margin:0 auto;padding:20px}section{display:none}section.on{display:block}
+.grid{display:grid;gap:14px}.k{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.two{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpi b{display:block;font-size:26px;margin-top:4px}.kpi span{color:var(--mut);font-size:13px}
+h2{font-size:18px;margin:4px 0 14px}h3{font-size:14px;margin:0 0 10px;color:var(--mut);font-weight:600}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14px}
+.btn{background:var(--brand);color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:14px;margin-top:14px}
+@media (prefers-color-scheme:dark){.btn{color:#0D1B1F}}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;color:#fff}
+.p-faible{background:var(--ok)}.p-mod{background:var(--warn);color:#14292F}.p-elev{background:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--mut);font-weight:600}
+.scroll{overflow-x:auto}.mono{font-family:ui-monospace,Consolas,monospace;font-size:12px}.note{color:var(--mut);font-size:12px;margin-top:10px}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--brand)}
+.badge{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600}.on-ks{background:var(--bad);color:#fff}.off-ks{background:var(--ok);color:#fff}
+.alert{border-left:4px solid var(--warn);padding:6px 10px;margin:6px 0;background:var(--bg);border-radius:4px;font-size:13px}
+svg text{fill:var(--mut);font-size:11px}
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/logo.svg" alt="Logo AI in Healthcare" onerror="this.style.display='none'">
+  <h1>AI in Healthcare<small>Orchestrateur multi-agents · monitoring · gouvernance</small></h1>
+  <nav id="menu">
+    <button data-s="accueil" class="on">Vue d'ensemble</button><button data-s="analyse">Analyser</button>
+    <button data-s="executions">Exécutions</button><button data-s="gouvernance">Gouvernance</button><button data-s="runbook">Runbook</button>
+  </nav>
+</header>
+<main>
+<section id="accueil" class="on">
+  <div class="grid k" id="kpis"></div>
+  <p class="note" id="source"></p>
+  <div class="grid two" style="margin-top:14px">
+    <div class="card"><h3>Répartition par catégorie de risque</h3><div id="ch-cat"></div></div>
+    <div class="card"><h3>Exécutions par secteur</h3><div id="ch-sec"></div></div>
+    <div class="card"><h3>Latence des 20 dernières exécutions (ms) — seuil 5 000</h3><div id="ch-lat"></div></div>
+    <div class="card"><h3>Alertes du monitoring</h3><div id="alertes"></div></div>
+  </div>
+</section>
+
+<section id="analyse">
+  <h2>Analyser une demande</h2>
+  <div class="grid two">
+    <form class="card" id="form" onsubmit="return false">
+      <label>Secteur</label><select id="f-sec"></select>
+      <label>Identifiant (pseudonymisé)</label><input id="f-id" value="PAT-100" pattern="[A-Za-z0-9_-]{3,32}">
+      <div id="f-champs"></div>
+      <button class="btn" id="go">Lancer l'analyse</button>
+      <p class="note">Données fictives. Aucune donnée nominative : utiliser un identifiant pseudonymisé.</p>
+    </form>
+    <div class="card" id="resultat"><h3>Résultat</h3><p class="note">Renseignez le formulaire puis lancez l'analyse.</p></div>
+  </div>
+</section>
+
+<section id="executions">
+  <h2>Journal des exécutions</h2>
+  <div class="card scroll"><table id="tbl"></table></div>
+</section>
+
+<section id="gouvernance">
+  <h2>Gouvernance</h2>
+  <div class="grid k" id="gov-kpi"></div>
+  <h3 style="margin-top:18px">Agent Cards</h3>
+  <div class="grid two" id="cartes"></div>
+  <h3 style="margin-top:18px">Journal d'audit</h3>
+  <div class="card scroll"><table id="audit"></table></div>
+</section>
+
+<section id="runbook">
+  <h2>Runbook d'incident</h2>
+  <div class="grid two">
+    <div class="card"><h3>1. Détection</h3><p>Patient à risque élevé non escaladé, taux d'échec &gt; 20 %, latence &gt; 5 000 ms. Retrouver l'exécution par son Correlation ID.</p></div>
+    <div class="card"><h3>2. Contention</h3><p>Activer le kill switch : <span class="mono">POST /api/admin/kill-switch</span>. Les demandes partent en revue manuelle.</p></div>
+    <div class="card"><h3>3. Remédiation</h3><p>Analyser les journaux, identifier la cause, <span class="mono">rollback vers 1.0.0</span>, vérifier 0 anomalie.</p></div>
+    <div class="card"><h3>4. Rétablissement</h3><p>Kill switch off, surveillance renforcée 48 h, nouvelle demande de changement avec approbation à deux rôles et non-régression.</p></div>
+  </div>
+</section>
+</main>
+<script>
+const DATA = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let STATE = DATA.snapshot, LIVE = false;
+
+document.querySelectorAll("#menu button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#menu button,section").forEach(e => e.classList.remove("on"));
+  b.classList.add("on"); $("#" + b.dataset.s).classList.add("on");
+});
+
+function pill(cat){const c=cat==="Risque élevé"?"elev":cat==="Risque modéré"?"mod":"faible";return `<span class="pill p-${c}">${esc(cat||"—")}</span>`}
+function barChart(el, data, color){
+  const e = Object.entries(data); if(!e.length){el.innerHTML='<p class="note">Aucune donnée.</p>';return}
+  const max = Math.max(...e.map(x=>x[1])), W=520, rowH=28;
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${e.length*rowH+4}" width="100%">` + e.map(([k,v],i)=>
+    `<text x="0" y="${i*rowH+18}">${esc(k)}</text><rect x="130" y="${i*rowH+6}" width="${Math.max(2,(W-190)*v/max)}" height="16" rx="4" fill="${color||'var(--brand)'}"/><text x="${136+(W-190)*v/max}" y="${i*rowH+18}">${v}</text>`).join("")+"</svg>";
+}
+function donut(el, data){
+  const cols={"Risque faible":"var(--ok)","Risque modéré":"var(--warn)","Risque élevé":"var(--bad)"};
+  const e=Object.entries(data), tot=e.reduce((a,x)=>a+x[1],0); if(!tot){el.innerHTML='<p class="note">Aucune donnée.</p>';return}
+  let a0=-Math.PI/2, paths="";
+  e.forEach(([k,v])=>{const a1=a0+2*Math.PI*v/tot,l=a1-a0>Math.PI?1:0,p=(a,r)=>[100+r*Math.cos(a),100+r*Math.sin(a)];
+    const [x0,y0]=p(a0,80),[x1,y1]=p(a1,80),[x2,y2]=p(a1,50),[x3,y3]=p(a0,50);
+    paths+=`<path d="M${x0} ${y0}A80 80 0 ${l} 1 ${x1} ${y1}L${x2} ${y2}A50 50 0 ${l} 0 ${x3} ${y3}Z" fill="${cols[k]||'var(--brand)'}"/>`;a0=a1});
+  el.innerHTML=`<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg viewBox="0 0 200 200" width="170">${paths}<text x="100" y="105" text-anchor="middle" style="font-size:22px;fill:var(--ink)">${tot}</text></svg><div>`+
+    e.map(([k,v])=>`<div style="margin:4px 0"><span class="pill" style="background:${cols[k]||'var(--brand)'};${k==='Risque modéré'?'color:#14292F':''}">${esc(k)}</span> ${v} (${Math.round(100*v/tot)} %)</div>`).join("")+"</div></div>";
+}
+function lineChart(el, pts){
+  if(!pts.length){el.innerHTML='<p class="note">Aucune donnée.</p>';return}
+  const W=520,H=190,max=Math.max(5200,...pts.map(p=>p.latence_ms)),x=i=>30+i*(W-40)/Math.max(1,pts.length-1),y=v=>H-24-(H-40)*v/max;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%"><line x1="30" x2="${W-10}" y1="${y(5000)}" y2="${y(5000)}" stroke="var(--bad)" stroke-dasharray="5 4"/><text x="34" y="${y(5000)-4}">seuil 5 000 ms</text>`+
+    `<polyline fill="none" stroke="var(--brand)" stroke-width="2" points="${pts.map((p,i)=>x(i)+","+y(p.latence_ms)).join(" ")}"/>`+
+    pts.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.latence_ms)}" r="3.5" fill="${p.latence_ms>5000?'var(--bad)':'var(--brand)'}"><title>${esc(p.correlation_id)} · ${p.latence_ms} ms</title></circle>`).join("")+"</svg>";
+}
+
+function render(){
+  const s=STATE,k=s.kpi;
+  $("#kpis").innerHTML=[["Exécutions",k.executions],["Taux de succès",k.taux_succes_pct+" %"],["Taux d'échec",k.taux_echec_pct+" %"],["Latence moyenne",k.latence_moyenne_ms+" ms"],["Latence p95",k.latence_p95_ms+" ms"],["Escalades HITL",k.escalades_hitl],["Tokens",k.tokens_total],["Coût (USD)",k.cout_total_usd]]
+    .map(([a,b])=>`<div class="card kpi"><span>${a}</span><b>${b}</b></div>`).join("");
+  $("#source").textContent = LIVE ? "Données en direct depuis l'API (localhost:8001)." : "Mode hors ligne : instantané du dernier lot de test (l'API n'est pas joignable).";
+  donut($("#ch-cat"), s.categories); barChart($("#ch-sec"), s.secteurs);
+  const lat=(s.executions||[]).slice(0,20).reverse().map(e=>({correlation_id:e.correlation_id,latence_ms:e.latence_ms}));
+  lineChart($("#ch-lat"), lat);
+  $("#alertes").innerHTML=(s.alertes||[]).slice(0,8).map(a=>`<div class="alert"><b>${esc(a.type)}</b> · ${esc(a.valeur)} (seuil ${esc(a.seuil)}) · <span class="mono">${esc(a.correlation_id)}</span></div>`).join("")||'<p class="note">Aucune alerte.</p>';
+  $("#tbl").innerHTML="<tr><th>Correlation ID</th><th>Date</th><th>Secteur</th><th>Agent</th><th>Entité</th><th>Score</th><th>Catégorie</th><th>Route</th><th>Statut</th><th>Latence</th><th>Version</th></tr>"+
+    (s.executions||[]).map(e=>`<tr><td class="mono">${esc(e.correlation_id)}</td><td>${esc(e.date_heure)}</td><td>${esc(e.secteur)}</td><td>${esc(e.agent)}</td><td>${esc(e.entite_id)}</td><td>${esc(e.score)}</td><td>${pill(e.categorie)}</td><td>${esc(e.route)}</td><td>${esc(e.statut)}</td><td>${e.latence_ms} ms</td><td>${esc(e.version_agent)}</td></tr>`).join("");
+  const ks=s.kill_switch||{};
+  $("#gov-kpi").innerHTML=`<div class="card kpi"><span>Version active</span><b>${esc(s.version)}</b></div><div class="card kpi"><span>Seuil HITL</span><b>${esc(s.seuil_hitl)}</b></div><div class="card kpi"><span>Kill switch</span><b><span class="badge ${ks.actif?'on-ks':'off-ks'}">${ks.actif?'ACTIF':'inactif'}</span></b></div><div class="card kpi"><span>Agents documentés</span><b>${DATA.cartes.length}</b></div>`;
+  $("#cartes").innerHTML=DATA.cartes.map(c=>`<div class="card"><h3>${esc(c.identifiant)}</h3><b>${esc(c.nom)}</b><p style="font-size:13px">${esc(c.description)}</p><p class="note">Propriétaire : ${esc(c.proprietaire_metier)} · v${esc(c.version)} · revue : ${esc(c.prochaine_revue)}</p></div>`).join("");
+  $("#audit").innerHTML="<tr><th>Date</th><th>Action</th><th>Acteur</th><th>Détail</th></tr>"+((s.audit||[]).map(a=>`<tr><td>${esc(a.horodatage)}</td><td>${esc(a.action)}</td><td>${esc(a.acteur)}</td><td>${esc(a.detail)}</td></tr>`).join("")||"<tr><td colspan=4>Aucun événement.</td></tr>");
+}
+
+/* formulaire */
+const sel=$("#f-sec");
+Object.entries(DATA.secteurs).forEach(([k,v])=>sel.add(new Option(v.nom+" — "+v.agent,k)));
+const DEFAUTS={spo2:97,temperature:37,frequence_cardiaque:80,douleur:2};
+function champs(){
+  const v=DATA.secteurs[sel.value];
+  $("#f-id").value={sante:"PAT-100",mines:"MIN-100",automobile:"VEH-100",finance:"TRX-100",energie:"RES-100",egov:"DOS-100"}[sel.value];
+  $("#f-champs").innerHTML=v.indicateurs.map(i=>`<label>${esc(i[1])} (${esc(i[2])})</label><input type="number" step="any" data-c="${i[0]}" value="${DEFAUTS[i[0]]??i[4]}">`).join("")+
+    `<label>${esc(v.drapeau[1])}</label><select data-c="${v.drapeau[0]}"><option>non</option><option>oui</option></select>`;
+}
+sel.onchange=champs; champs();
+
+function scoreLocal(sec,ent){ // mêmes règles que app/sectors.py (mode hors ligne)
+  const v=DATA.secteurs[sec];let tot=0;const det=[];
+  v.indicateurs.forEach(([c,l,u,sens,ok,crit,w])=>{const x=parseFloat(ent[c]);const r=sens==="haut"?(x-ok)/(crit-ok):(ok-x)/(ok-crit);const p=w*Math.max(0,Math.min(1,r));tot+=p;det.push({indicateur:l,valeur:x,unite:u,points:Math.round(p*10)/10})});
+  const p=ent[v.drapeau[0]]==="oui"?v.drapeau[2]:0;tot+=p;det.push({indicateur:v.drapeau[1],valeur:ent[v.drapeau[0]],unite:"",points:p});
+  return [Math.round(tot),det];
+}
+$("#go").onclick=async()=>{
+  const ent={};document.querySelectorAll("#f-champs [data-c]").forEach(e=>ent[e.dataset.c]=e.tagName==="SELECT"?e.value:parseFloat(e.value));
+  const corps={secteur:sel.value,entite_id:$("#f-id").value,indicateurs:ent};let r;
+  try{
+    const resp=await fetch("/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(corps)});
+    if(!resp.ok)throw new Error((await resp.json()).detail?.erreur||"Requête refusée ("+resp.status+")");
+    r=await resp.json();LIVE=true;refresh();
+  }catch(err){
+    if(err instanceof TypeError||location.protocol==="file:"){const [s,d]=scoreLocal(sel.value,ent);const seuil=STATE.seuil_hitl;
+      r={correlation_id:"LOCAL-"+Math.random().toString(16).slice(2,12),score:s,categorie:s>=seuil?"Risque élevé":s>=seuil/2?"Risque modéré":"Risque faible",route:s>=seuil?"Escalade HITL (Slack simulé)":"Sortie automatique",detail:d,statut:"calcul local (hors ligne)"};}
+    else{$("#resultat").innerHTML=`<h3>Résultat</h3><p style="color:var(--bad)">${esc(err.message)}</p>`;return}
+  }
+  $("#resultat").innerHTML=`<h3>Résultat</h3><p>${pill(r.categorie)} <b style="font-size:26px;margin-left:8px">${r.score}</b> / 100</p><div class="bar"><i style="width:${r.score}%"></i></div>
+   <p class="note">Correlation ID : <span class="mono">${esc(r.correlation_id)}</span></p><p>Route : <b>${esc(r.route)}</b><br>Statut : ${esc(r.statut)}</p>
+   <table><tr><th>Indicateur</th><th>Valeur</th><th>Points</th></tr>${r.detail.map(d=>`<tr><td>${esc(d.indicateur)}</td><td>${esc(d.valeur)} ${esc(d.unite)}</td><td>${d.points}</td></tr>`).join("")}</table>
+   <p class="note">Aide à la décision : aucune décision médicale finale. Un risque élevé est escaladé à un humain.</p>`;
+};
+
+async function refresh(){
+  try{const r=await fetch("/api/stats");if(!r.ok)throw 0;const s=await r.json();
+    const ex=await (await fetch("/api/executions?limite=60")).json();const au=await (await fetch("/api/audit?limite=20")).json();
+    STATE={...s,executions:ex,audit:au};LIVE=true;}catch(e){LIVE=false}
+  render();
+}
+refresh();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Déploiement Render (Blueprint) : New + > Blueprint > sélectionner le dépôt GitHub
+services:
+  - type: web
+    name: ai-healthcare-agents
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: ADMIN_TOKEN
+        sync: false          # à saisir dans le tableau de bord Render, jamais dans le dépôt

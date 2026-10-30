@@ -1,0 +1,1 @@
+{"id": "CR-002", "titre": "Réduire les escalades : seuil HITL 70 -> 90", "version_cible": "1.1.0", "statut": "retirée après incident (rollback vers 1.0.0)", "approbations": ["responsable_technique"], "cause_incident": "les patients au score 70-89 ne sont plus escaladés"}

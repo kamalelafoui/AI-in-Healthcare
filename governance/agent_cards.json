@@ -1,0 +1,175 @@
+[
+  {
+    "identifiant": "HC-ORCH-001",
+    "nom": "Orchestrateur multi-agents",
+    "type_agent": "Routeur : choisit l'agent sectoriel selon le secteur de la demande",
+    "description": "Reçoit une demande, génère le Correlation ID, appelle l'agent sectoriel, applique le seuil HITL et la route de sortie.",
+    "proprietaire_metier": "Responsable clinique",
+    "responsable_technique": "Équipe data et IA",
+    "outils_autorises": [
+      "Agents sectoriels",
+      "Agent de monitoring",
+      "Notification Slack (simulée)"
+    ],
+    "garde_fous": [
+      "Kill switch",
+      "Rollback",
+      "Approbation à deux rôles",
+      "Non-régression golden",
+      "Échec technique : revue manuelle"
+    ],
+    "limites": [
+      "Aide à la décision : aucune décision médicale finale"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  },
+  {
+    "identifiant": "HC-MON-001",
+    "nom": "Agent de monitoring",
+    "type_agent": "Observabilité",
+    "description": "Trace chaque étape sous un Correlation ID : durée, tokens, coût, statut ; calcule les KPI et déclenche les alertes.",
+    "proprietaire_metier": "Responsable qualité",
+    "responsable_technique": "Équipe data et IA",
+    "outils_autorises": [
+      "Journal d'exécution (logs/execution_log.jsonl)",
+      "Journal d'audit (logs/audit.jsonl)"
+    ],
+    "kpi_et_seuils": {
+      "taux_succes_min_pct": 80,
+      "latence_max_ms": 5000,
+      "taux_echec_max_pct": 20
+    },
+    "garde_fous": [
+      "Alerte latence > 5000 ms",
+      "Alerte taux d'échec > 20 %"
+    ],
+    "limites": [
+      "Latences simulées en l'absence de modèle réel"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  },
+  {
+    "identifiant": "HC-SANTE-001",
+    "nom": "Agent Triage Patient",
+    "type_agent": "Agent sectoriel : Santé",
+    "description": "Calcule un score de risque 0-100 à partir de saturation en oxygène, température, fréquence cardiaque, douleur (0-10) et du drapeau « comorbidités ».",
+    "proprietaire_metier": "Responsable clinique",
+    "responsable_technique": "Équipe data et IA",
+    "donnees_personnelles": "Minimisation : identifiant pseudonymisé, aucune donnée nominative transmise",
+    "garde_fous": [
+      "Entrée validée (champs et types)",
+      "Score absent : revue manuelle",
+      "Seuils à valider par un expert métier"
+    ],
+    "limites": [
+      "Règles pédagogiques, données fictives uniquement"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  },
+  {
+    "identifiant": "HC-MINES-001",
+    "nom": "Agent Sécurité Minière",
+    "type_agent": "Agent sectoriel : Mines",
+    "description": "Calcule un score de risque 0-100 à partir de méthane, vibration, température galerie et du drapeau « zone confinée ».",
+    "proprietaire_metier": "Responsable métier Mines",
+    "responsable_technique": "Équipe data et IA",
+    "donnees_personnelles": "Aucune donnée personnelle",
+    "garde_fous": [
+      "Entrée validée (champs et types)",
+      "Score absent : revue manuelle",
+      "Seuils à valider par un expert métier"
+    ],
+    "limites": [
+      "Règles pédagogiques, données fictives uniquement"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  },
+  {
+    "identifiant": "HC-AUTO-001",
+    "nom": "Agent Maintenance Véhicule",
+    "type_agent": "Agent sectoriel : Automobile",
+    "description": "Calcule un score de risque 0-100 à partir de température moteur, usure des freins, pression des pneus et du drapeau « alerte airbag ».",
+    "proprietaire_metier": "Responsable métier Automobile",
+    "responsable_technique": "Équipe data et IA",
+    "donnees_personnelles": "Aucune donnée personnelle",
+    "garde_fous": [
+      "Entrée validée (champs et types)",
+      "Score absent : revue manuelle",
+      "Seuils à valider par un expert métier"
+    ],
+    "limites": [
+      "Règles pédagogiques, données fictives uniquement"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  },
+  {
+    "identifiant": "HC-FIN-001",
+    "nom": "Agent Risque Transaction",
+    "type_agent": "Agent sectoriel : Finance",
+    "description": "Calcule un score de risque 0-100 à partir de montant / moyenne client, transactions sur 24 h, ancienneté du compte et du drapeau « pays à risque ».",
+    "proprietaire_metier": "Responsable métier Finance",
+    "responsable_technique": "Équipe data et IA",
+    "donnees_personnelles": "Aucune donnée personnelle",
+    "garde_fous": [
+      "Entrée validée (champs et types)",
+      "Score absent : revue manuelle",
+      "Seuils à valider par un expert métier"
+    ],
+    "limites": [
+      "Règles pédagogiques, données fictives uniquement"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  },
+  {
+    "identifiant": "HC-NRG-001",
+    "nom": "Agent Stabilité Réseau",
+    "type_agent": "Agent sectoriel : Énergie",
+    "description": "Calcule un score de risque 0-100 à partir de charge du réseau, écart de fréquence, température transformateur et du drapeau « maintenance en cours ».",
+    "proprietaire_metier": "Responsable métier Énergie",
+    "responsable_technique": "Équipe data et IA",
+    "donnees_personnelles": "Aucune donnée personnelle",
+    "garde_fous": [
+      "Entrée validée (champs et types)",
+      "Score absent : revue manuelle",
+      "Seuils à valider par un expert métier"
+    ],
+    "limites": [
+      "Règles pédagogiques, données fictives uniquement"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  },
+  {
+    "identifiant": "HC-EGOV-001",
+    "nom": "Agent Dossier Administratif",
+    "type_agent": "Agent sectoriel : e-Gov",
+    "description": "Calcule un score de risque 0-100 à partir de anomalies sur les pièces, délai de traitement, similarité avec d'autres demandes et du drapeau « cas sensible ».",
+    "proprietaire_metier": "Responsable métier e-Gov",
+    "responsable_technique": "Équipe data et IA",
+    "donnees_personnelles": "Aucune donnée personnelle",
+    "garde_fous": [
+      "Entrée validée (champs et types)",
+      "Score absent : revue manuelle",
+      "Seuils à valider par un expert métier"
+    ],
+    "limites": [
+      "Règles pédagogiques, données fictives uniquement"
+    ],
+    "version": "1.0.0",
+    "date_derniere_revue": "2026-10-30",
+    "prochaine_revue": "2027-01-30"
+  }
+]

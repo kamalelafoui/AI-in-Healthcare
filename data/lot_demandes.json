@@ -1,0 +1,281 @@
+[
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-001",
+  "indicateurs": {
+   "spo2": 98,
+   "temperature": 36.8,
+   "frequence_cardiaque": 72,
+   "douleur": 1,
+   "comorbidites": "non"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-002",
+  "indicateurs": {
+   "spo2": 85,
+   "temperature": 39.8,
+   "frequence_cardiaque": 145,
+   "douleur": 9,
+   "comorbidites": "oui"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-003",
+  "indicateurs": {
+   "spo2": 93,
+   "temperature": 38.2,
+   "frequence_cardiaque": 108,
+   "douleur": 5,
+   "comorbidites": "non"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-004",
+  "indicateurs": {
+   "spo2": 90,
+   "temperature": 39.0,
+   "frequence_cardiaque": 130,
+   "douleur": 7,
+   "comorbidites": "oui"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-005",
+  "indicateurs": {
+   "spo2": 97,
+   "temperature": 37.0,
+   "frequence_cardiaque": 80,
+   "douleur": 2,
+   "comorbidites": "non"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-006",
+  "indicateurs": {
+   "spo2": 86,
+   "temperature": 40.1,
+   "frequence_cardiaque": 150,
+   "douleur": 8,
+   "comorbidites": "oui"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-007",
+  "indicateurs": {
+   "spo2": 94,
+   "temperature": 37.9,
+   "frequence_cardiaque": 102,
+   "douleur": 4,
+   "comorbidites": "non"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-008",
+  "indicateurs": {
+   "spo2": 96,
+   "temperature": 36.6,
+   "frequence_cardiaque": 76,
+   "douleur": 0,
+   "comorbidites": "non"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-009",
+  "indicateurs": {
+   "spo2": 89,
+   "temperature": 38.8,
+   "frequence_cardiaque": 125,
+   "douleur": 6,
+   "comorbidites": "oui"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-010",
+  "indicateurs": {
+   "spo2": 92,
+   "temperature": 38.0,
+   "frequence_cardiaque": 95,
+   "douleur": 3,
+   "comorbidites": "non"
+  }
+ },
+ {
+  "secteur": "mines",
+  "entite_id": "MIN-001",
+  "indicateurs": {
+   "methane": 0.72,
+   "vibration": 3.56,
+   "temperature": 38.92,
+   "zone_confinee": "oui"
+  }
+ },
+ {
+  "secteur": "mines",
+  "entite_id": "MIN-002",
+  "indicateurs": {
+   "methane": 1.66,
+   "vibration": 2.6,
+   "temperature": 37.15,
+   "zone_confinee": "oui"
+  }
+ },
+ {
+  "secteur": "mines",
+  "entite_id": "MIN-003",
+  "indicateurs": {
+   "methane": 0.17,
+   "vibration": 8.37,
+   "temperature": 23.82,
+   "zone_confinee": "oui"
+  }
+ },
+ {
+  "secteur": "automobile",
+  "entite_id": "VEH-001",
+  "indicateurs": {
+   "temp_moteur": 109.8,
+   "usure_freins": 24.43,
+   "pression_pneus": 1.88,
+   "alerte_airbag": "oui"
+  }
+ },
+ {
+  "secteur": "automobile",
+  "entite_id": "VEH-002",
+  "indicateurs": {
+   "temp_moteur": 113.38,
+   "usure_freins": 63.72,
+   "pression_pneus": 1.27,
+   "alerte_airbag": "non"
+  }
+ },
+ {
+  "secteur": "automobile",
+  "entite_id": "VEH-003",
+  "indicateurs": {
+   "temp_moteur": 87.23,
+   "usure_freins": 36.58,
+   "pression_pneus": 1.87,
+   "alerte_airbag": "oui"
+  }
+ },
+ {
+  "secteur": "finance",
+  "entite_id": "TRX-001",
+  "indicateurs": {
+   "montant_ratio": 3.83,
+   "transactions_24h": 5.18,
+   "anciennete_compte": 7.95,
+   "pays_a_risque": "non"
+  }
+ },
+ {
+  "secteur": "finance",
+  "entite_id": "TRX-002",
+  "indicateurs": {
+   "montant_ratio": 6.94,
+   "transactions_24h": 20.78,
+   "anciennete_compte": 7.08,
+   "pays_a_risque": "oui"
+  }
+ },
+ {
+  "secteur": "finance",
+  "entite_id": "TRX-003",
+  "indicateurs": {
+   "montant_ratio": 4.78,
+   "transactions_24h": 16.88,
+   "anciennete_compte": 4.7,
+   "pays_a_risque": "oui"
+  }
+ },
+ {
+  "secteur": "energie",
+  "entite_id": "RES-001",
+  "indicateurs": {
+   "charge_reseau": 79.71,
+   "ecart_frequence": 0.31,
+   "temp_transfo": 86.9,
+   "maintenance_en_cours": "non"
+  }
+ },
+ {
+  "secteur": "energie",
+  "entite_id": "RES-002",
+  "indicateurs": {
+   "charge_reseau": 72.35,
+   "ecart_frequence": 0.56,
+   "temp_transfo": 76.69,
+   "maintenance_en_cours": "oui"
+  }
+ },
+ {
+  "secteur": "energie",
+  "entite_id": "RES-003",
+  "indicateurs": {
+   "charge_reseau": 88.13,
+   "ecart_frequence": 0.43,
+   "temp_transfo": 69.65,
+   "maintenance_en_cours": "non"
+  }
+ },
+ {
+  "secteur": "egov",
+  "entite_id": "DOS-001",
+  "indicateurs": {
+   "anomalies_pieces": 2.63,
+   "delai_traitement": 52.88,
+   "similarite_demandes": 72.0,
+   "cas_sensible": "non"
+  }
+ },
+ {
+  "secteur": "egov",
+  "entite_id": "DOS-002",
+  "indicateurs": {
+   "anomalies_pieces": 3.04,
+   "delai_traitement": 7.17,
+   "similarite_demandes": 53.51,
+   "cas_sensible": "oui"
+  }
+ },
+ {
+  "secteur": "egov",
+  "entite_id": "DOS-003",
+  "indicateurs": {
+   "anomalies_pieces": 3.79,
+   "delai_traitement": 11.66,
+   "similarite_demandes": 51.56,
+   "cas_sensible": "oui"
+  }
+ },
+ {
+  "secteur": "sante",
+  "entite_id": "PAT-INV1",
+  "indicateurs": {
+   "spo2": "n/a",
+   "temperature": 37,
+   "frequence_cardiaque": 80,
+   "douleur": 2,
+   "comorbidites": "non"
+  }
+ },
+ {
+  "secteur": "finance",
+  "entite_id": "TRX-INV1",
+  "indicateurs": {
+   "montant_ratio": 3,
+   "transactions_24h": 4
+  }
+ }
+]

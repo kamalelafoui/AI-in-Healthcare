@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "executions": 27,
+  "taux_succes_pct": 92.6,
+  "taux_echec_pct": 7.4,
+  "latence_moyenne_ms": 1149,
+  "latence_p95_ms": 5279,
+  "tokens_total": 5097,
+  "cout_total_usd": 0.002548,
+  "escalades_hitl": 4
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "G1-stable",
+    "secteur": "sante",
+    "entree": {
+      "spo2": 98,
+      "temperature": 36.8,
+      "frequence_cardiaque": 72,
+      "douleur": 1,
+      "comorbidites": "non"
+    },
+    "categorie_attendue": "Risque faible"
+  },
+  {
+    "id": "G2-critique",
+    "secteur": "sante",
+    "entree": {
+      "spo2": 85,
+      "temperature": 39.8,
+      "frequence_cardiaque": 145,
+      "douleur": 9,
+      "comorbidites": "oui"
+    },
+    "categorie_attendue": "Risque élevé"
+  },
+  {
+    "id": "G3-seuil-70-89",
+    "secteur": "sante",
+    "entree": {
+      "spo2": 90,
+      "temperature": 39.0,
+      "frequence_cardiaque": 130,
+      "douleur": 7,
+      "comorbidites": "oui"
+    },
+    "categorie_attendue": "Risque élevé"
+  },
+  {
+    "id": "G4-modere",
+    "secteur": "sante",
+    "entree": {
+      "spo2": 91,
+      "temperature": 38.5,
+      "frequence_cardiaque": 115,
+      "douleur": 5,
+      "comorbidites": "non"
+    },
+    "categorie_attendue": "Risque modéré"
+  },
+  {
+    "id": "G5-mines-methane",
+    "secteur": "mines",
+    "entree": {
+      "methane": 1.8,
+      "vibration": 14,
+      "temperature": 44,
+      "zone_confinee": "oui"
+    },
+    "categorie_attendue": "Risque élevé"
+  },
+  {
+    "id": "G6-finance-normal",
+    "secteur": "finance",
+    "entree": {
+      "montant_ratio": 1,
+      "transactions_24h": 2,
+      "anciennete_compte": 48,
+      "pays_a_risque": "non"
+    },
+    "categorie_attendue": "Risque faible"
+  }
+]

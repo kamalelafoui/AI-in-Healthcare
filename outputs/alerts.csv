@@ -1,0 +1,5 @@
+﻿date_heure;type;correlation_id;valeur;seuil;action
+2026-10-30 14:47:34;Latence élevée;CID-20147f26ad;5279;5000;Surveiller le secteur sante
+2026-10-30 14:47:34;Latence élevée;CID-f74056fe43;5075;5000;Surveiller le secteur sante
+2026-10-30 14:47:34;Latence élevée;CID-0a336ce71a;5397;5000;Surveiller le secteur mines
+2026-10-30 14:47:34;Latence élevée;CID-727270d368;5145;5000;Surveiller le secteur energie
